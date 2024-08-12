@@ -148,5 +148,71 @@ powercfg /change monitor-timeout-dc 0
 powercfg /change hibernate-timeout-ac 0
 powercfg /change hibernate-timeout-dc 0
 ```
+### Install LimaCharlie EDR on Windows VM 
 
+1. LimaCharlie is a very powerful “SecOps Cloud Platform”. It not only comes with a cross-platform EDR agent, but also handles all of the log shipping/ingestion and has a threat detection engine. I am a huge fan of LimaCharlie for many reasons, one of which is that they have a free tier for up to two systems which is what allows me to make it an instrumental part of this guide.
+   
+2. Create a free LimaCharlie account.
+   
+3. LimaCharlie will ask you a few questions about your role. Answer however you wish, it just helps their developers build a better product. If you’d like for them to know that this series helped you discover LC, reference this blog post under “How did you hear about us?” Completely optional, I do not get kickbacks or anything :)
+
+5. Once logged into LimaCharlie, create an organization
+
+6. Name: whatever you want, but it must be unique
+
+7. Data Residency: whatever is closest
+
+8. Demo Configuration Enabled: disabled
+
+9. Template: Extended Detection & Response Standard
+
+10. Once the org is created, click “Add Sensor”
+
+11. Select Windows
+
+12. Provide a description such as: Windows VM - Lab
+
+13. Click Create
+
+14. Select the Installation Key we just created
+
+15. Specify the x86-64 (.exe) sensor, but then skip ahead to my instructions versus the ones provided.
+
+16. IN THE WINDOWS VM, open an Administrative PowerShell prompt and paste the following commands:
+
+17. cd C:\Users\User\Downloads
+18. Invoke-WebRequest -Uri https://downloads.limacharlie.io/sensor/windows/64 -Outfile C:\Users\User\Downloads\lc_sensor.exe
+19. Shift into a standard command prompt by running this command
+``` cmd.exe ```
+20. Next, we will copy the install command provided by LimaCharlie which contains the installation key. Paste this command into your open terminal.
+21. Paste this command into the admin command prompt in your Windows VM
+22. This is the expected output, ignore the “ERROR” that says “service installed!” Still waiting on those guys to fix that :)
+
+23. If you experience an error trying to install the EXE, try the x86-64 MSI option on the LimaCharlie installer dialog.
+
+24. If everything worked correctly, in the LimaCharlie web UI you should also see the sensor reporting in.
+
+25. Now let’s configure LimaCharlie to also ship the Sysmon event logs alongside its own EDR telemetry
+
+26. In the left-side menu, click “Artifact Collection”
+
+27. Next to “Artifact Collection Rules” click “Add Rule”
+
+28. Name: windows-sysmon-logs
+
+29. Platforms: Windows
+
+30. Path Pattern: wel://Microsoft-Windows-Sysmon/Operational:*
+
+31. Retention Period: 10
+
+32. Click “Save Rule”
+
+33. LimaCharlie will now start shipping Sysmon logs which provide a wealth of EDR-like telemetry, some of which is redundant to LC’s own telemetry, but Sysmon is still a very power visibility tool that runs well alongside any EDR agent.
+
+34. The other reason we are ingesting Sysmon logs is that the built-in Sigma rules we previously enabled largely depend on Sysmon logs as that is what most of them were written for.
+
+35. That’s all we’ll do with LimaCharlie for now. We’ll dive deeper into what it can do later on. Feel free to close all open windows on the Windows VM as we’re now moving onto the Linux VM.
+
+36. Pro Tip: Now would be a good time to Snapshot your Windows VM in case it gets hosed later on. You can always revert to this “Clean” snapshot later on to get back to a good state.
 *Ref 1: Network Diagram*
