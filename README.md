@@ -34,6 +34,7 @@ This is a lab from a blog post. You can follow along with it [here](https://blog
 8. Ping google
 ``` ping -c 2 google.com ```
 9. 
+![image](https://github.com/user-attachments/assets/5a7b2374-4f5d-401a-bc60-a310cb825c03)
 
 ### Prevent VM from going into standby
 1. From an administrative command prompt, let’s prevent the VM from going into sleep/standby mode during our shenanigans
