@@ -138,4 +138,15 @@ The Detection Lab project aimed to establish a controlled environment for simula
     
 58. System will restart into normal desktop environment, now (hopefully) Defender-free.
 
+### Prevent VM from going into standby
+1. From an administrative command prompt, let’s prevent the VM from going into sleep/standby mode during our shenanigans
+```
+powercfg /change standby-timeout-ac 0
+powercfg /change standby-timeout-dc 0
+powercfg /change monitor-timeout-ac 0
+powercfg /change monitor-timeout-dc 0
+powercfg /change hibernate-timeout-ac 0
+powercfg /change hibernate-timeout-dc 0
+```
+
 *Ref 1: Network Diagram*
