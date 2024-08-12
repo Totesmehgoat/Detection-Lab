@@ -24,6 +24,8 @@ The Detection Lab project aimed to establish a controlled environment for simula
 
 This is a lab from a blog post. You can follow along with it [here](https://blog.ecapuano.com/p/so-you-want-to-be-a-soc-analyst-intro).
 
+###Part 1 - Setup a small vitrualization environment (2 small VMs)
+
 1. Download and install VMware Workstation Pro.
 2. Download and deploy a free Windows VM directly from Microsoft
 3. Download and install Ubuntu into a new VM and make sure to set a static IP on the same subnet as the Microsoft OS.
@@ -33,8 +35,9 @@ This is a lab from a blog post. You can follow along with it [here](https://blog
 7. Restart Ubuntu
 8. Ping google
 ``` ping -c 2 google.com ```
-9. 
+9. Make sure you get a similar output to below.
 ![image](https://github.com/user-attachments/assets/5a7b2374-4f5d-401a-bc60-a310cb825c03)
+10. Next in part one
 
 ### Prevent VM from going into standby
 1. From an administrative command prompt, let’s prevent the VM from going into sleep/standby mode during our shenanigans
