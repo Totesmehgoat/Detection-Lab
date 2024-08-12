@@ -215,4 +215,5 @@ powercfg /change hibernate-timeout-dc 0
 35. That’s all we’ll do with LimaCharlie for now. We’ll dive deeper into what it can do later on. Feel free to close all open windows on the Windows VM as we’re now moving onto the Linux VM.
 
 36. Pro Tip: Now would be a good time to Snapshot your Windows VM in case it gets hosed later on. You can always revert to this “Clean” snapshot later on to get back to a good state.
+
 *Ref 1: Network Diagram*
