@@ -100,7 +100,17 @@ mkdir -p /opt/sliver
 15. Since we're using and EDR we want to be familiar with the processes that run, but this is my first lab and noticing after the installation of the EDR (LimaCharlie) we can identitfy network connections that are active. Through LimaCharlie go to your sensors and click the processes under the lab sensor that is installed. You can search by process name or just scroll through and see active connections with a wave next to the process
 ![image](https://github.com/user-attachments/assets/67ec523c-464b-45cb-b2f3-766c26d4c65f)
 
-16. 
+16. If you click the veritcal dots and go to view network connection you'll find where the connection leads to.
+![image](https://github.com/user-attachments/assets/65b873b5-c32d-45bf-8cbe-a87ecce4cc13)
+
+17. Explore other parts of the LimaCharlie interface to find network connections and the file system.
+18. You can find the hash of the file and even search in virus total to see if its known.
+![image](https://github.com/user-attachments/assets/ff058b34-3483-4756-95c3-4590af8ace7f)
+This file is unique since we created it and because of that its never been seen before but since we're analysts we need to trust ourselves that if something seems suspicious it should be investigated further if something doesn't seem right.
+19. Inspecting timeline can show us signed processes and unsigned which might be of importance to us seeing as we're suspecting some malicious activity, but could be useful in real world scenarios to identify malicious activity.
+
+### Part 3 - Let's Get Adversarial
+1. 
 
 
 
