@@ -93,9 +93,11 @@ mkdir -p /opt/sliver
 12. Now we can see connections on the pc if we use netstat and the green one will be your sliver connection
   ![image](https://github.com/user-attachments/assets/ea128754-5738-4e5d-bd10-762cfda304db)
 13. Running ps -T will show you the running processes and the red hightlighted ones are a defensive measure while the green hightlight one is the sliver process
+
 ![image](https://github.com/user-attachments/assets/eb0c4d2e-db82-4f75-96ae-1ab1dc816d0b)
 ![image](https://github.com/user-attachments/assets/0cc86ee2-8836-49a2-b202-84fe532107c6)
-14. Since we're using and EDR we want to be familiar with the processes that run, but this is my first lab and noticing after the installation of the EDR (LimaCharlie) we can identitfy network connections that are active. Through LimaCharlie go to your sensors and click the processes under the lab sensor that is installed. You can search by process name or just scroll through and see active connections with a wave next to the process
+
+15. Since we're using and EDR we want to be familiar with the processes that run, but this is my first lab and noticing after the installation of the EDR (LimaCharlie) we can identitfy network connections that are active. Through LimaCharlie go to your sensors and click the processes under the lab sensor that is installed. You can search by process name or just scroll through and see active connections with a wave next to the process
 ![image](https://github.com/user-attachments/assets/67ec523c-464b-45cb-b2f3-766c26d4c65f)
 
 16. 
