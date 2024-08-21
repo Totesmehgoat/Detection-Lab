@@ -99,7 +99,7 @@ mkdir -p /opt/sliver
 ![image](https://github.com/user-attachments/assets/eb0c4d2e-db82-4f75-96ae-1ab1dc816d0b)
 ![image](https://github.com/user-attachments/assets/0cc86ee2-8836-49a2-b202-84fe532107c6)
 
-15. Since we're using and EDR we want to be familiar with the processes that run, but this is my first lab and noticing after the installation of the EDR (LimaCharlie) we can identitfy network connections that are active. Through LimaCharlie go to your sensors and click the processes under the lab sensor that is installed. You can search by process name or just scroll through and see active connections with a wave next to the process
+15. Since we're using and EDR we want to be familiar with the processes that run, but this is my first lab and noticing after the installation of the EDR (LimaCharlie) we can identitfy network connections that are active. Through LimaCharlie go to your sensors and click the processes under the lab sensor that is installed. You can search by process name or just scroll through and see active connections with a wave next to the process.
 ![image](https://github.com/user-attachments/assets/67ec523c-464b-45cb-b2f3-766c26d4c65f)
 
 16. If you click the veritcal dots and go to view network connection you'll find where the connection leads to.
@@ -115,12 +115,12 @@ This file is unique since we created it and because of that its never been seen 
 1. Now that we've explored new avenues that we've created and how to detect the malicious activity we want to see about doing something all attackers want and thats get CREDENTIALS. Run the command ``` procdump -n lsass.exe -s lsass.dmp ```
 2. In another lab I'll look into processing this lsass dump but for now its just an excercise to see how to get it from sliver server.
 
-3. Now we are going back to LimaCharlie to find a SENSITIVE_PROCESS_ACCESS event that will alert us of something that is likely to be out of the ordinary
+3. Now we are going back to LimaCharlie to find a SENSITIVE_PROCESS_ACCESS event that will alert us of something that is likely to be out of the ordinary.
 ![image](https://github.com/user-attachments/assets/b697416b-2eb9-489e-a746-c7ca22388f7c)
 
 4. Now that we found this type of activity and understand it to be malicious we need to detect anytime this happens and setup a D&R rule. Use the following button to make a D&R rule.
 ![image](https://github.com/user-attachments/assets/d425bb70-22d9-402a-b8a6-1bdda41e8e1d)
-5. When making the rule for this lab we can use
+5. When making the rule for this lab we can use.
 ```
 event: SENSITIVE_PROCESS_ACCESS
 op: ends with
@@ -128,7 +128,7 @@ path: event/*/TARGET/FILE_PATH
 value: lsass.exe
 ```
 The lab is not for a real world scenario because the lab admits that this rule would be noisy and not very useful without some tuning.
-6. Then we tell it what to do with the response with the following in the response box
+6. Then we tell it what to name it with in the following in the response box.
 ```
 - action: report
   name: LSASS access
