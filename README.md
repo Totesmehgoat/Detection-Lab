@@ -136,6 +136,14 @@ The lab is not for a real world scenario because the lab admits that this rule w
 7. Once you've created this run the rule against the event at the bottom of the page to determine if it will work. Then save it with a name that will help with showing detections easier in the detection section.
 8. Run procdump again and check detections for a new event.
 
+### Part 4 - Blocking Attacks
+1. Now we're going to do some things that will cause suspicious activity again and something an attacker would do to remove good backups in order to keep their software on the system. We will remove volume shadow copies.
+2. In sliver server; get a session going again if you've stopped it.
+3. Run the command ``` shell ``` from your sliver server in the local command prompt
+   ![image](https://github.com/user-attachments/assets/ccdb9eae-e6b8-4efa-a662-586f10ee12c9)
+4. There probably won't be any shadow copies but just running this command can show malicious activity and give us a baseline to work with in order to keep false positives to a minimum. If we start blocking just anything it could cause some chaos in a real environment so getting this right is crucial.
+5. 
+
 
 
 
