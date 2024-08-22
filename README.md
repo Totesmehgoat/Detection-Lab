@@ -133,7 +133,8 @@ The lab is not for a real world scenario because the lab admits that this rule w
 - action: report
   name: LSASS access
 ```
-
+7. Once you've created this run the rule against the event at the bottom of the page to determine if it will work. Then save it with a name that will help with showing detections easier in the detection section.
+8. Run procdump again and check detections for a new event.
 
 
 
