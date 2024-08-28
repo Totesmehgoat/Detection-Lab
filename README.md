@@ -142,9 +142,31 @@ The lab is not for a real world scenario because the lab admits that this rule w
 3. Run the command ``` shell ``` from your sliver server in the local command prompt
    ![image](https://github.com/user-attachments/assets/ccdb9eae-e6b8-4efa-a662-586f10ee12c9)
 4. There probably won't be any shadow copies but just running this command can show malicious activity and give us a baseline to work with in order to keep false positives to a minimum. If we start blocking just anything it could cause some chaos in a real environment so getting this right is crucial.
-5. 
-
-
+5. Go to detections in LimaCharlie and you'll notice the vssadmin for shadow deletion was detected. You can click on the small button on the top right that looks like an arrow pointing up and to the right to make a D&R rule.
+6. Create the D&R with the following
+   Detect:
+```
+event: NEW_PROCESS
+op: and
+rules:
+-  op: is
+path: event/FILE_PATH
+value: C:\Windows\system32\vssadmin.exe
+- op: is
+path: event/COMMAND_LINE
+value: '"C:\Windows\system32\vssadmin.exe" delete shadows /all'
+- op: is
+path: routing/hostname
+value: windev2407eval.localdomain
+```
+7. Then create the response with this
+```
+name: vss_deletion_kill_it
+- action: task
+command:
+- deny_tree
+- <<routing/parent>>
+   ```
 
 
 *Ref 1: Network Diagram*
