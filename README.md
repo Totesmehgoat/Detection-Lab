@@ -159,14 +159,20 @@ value: '"C:\Windows\system32\vssadmin.exe" delete shadows /all'
 path: routing/hostname
 value: windev2407eval.localdomain
 ```
-7. Then create the response with this
+7. Then create the response with this:
 ```
 name: vss_deletion_kill_it
 - action: task
 command:
 - deny_tree
 - <<routing/parent>>
-   ```
+```
+8. Now if you run the same command from your shell session it will be stopped by the EDR. Go ahead and test it out.
 
+### Part 5 - Tuning Your Detection
+1. Just as an exaple for the rules when they give us false positives svchost is something the author uses as an example. Where if the expected path for the svchost.exe was to run from system32 then that should be marked as false positive on LimaCharlie. When you look at the detection event made by the rule for svchost if it was written badly it would give you that false positive.
+2. On the false positive detection you need to click "Mark False Positive" to create a False Positive Rule so that you can stop the unneccessary alerts and streamline your detections. Some of the already written rules are good, but one that is pointed out is that the hash would be seen as false but that wouldn't be a good thing to use because svchost could updated so the hash would be good to remove since the hash will change with updates.
+3. Also, we want to have the hostname be for all hosts not just a specific one so remove that line about hosts.
+4. Now you should go back and find other events of svchost detections and copy its information to test it against your false positive rule.
 
 *Ref 1: Network Diagram*
