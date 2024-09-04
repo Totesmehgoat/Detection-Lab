@@ -1,4 +1,4 @@
-# SOC Analyst EDR Lab
+![image](https://github.com/user-attachments/assets/7cb4cba3-89be-4ba2-b3e2-a8cc6ddfd323)# SOC Analyst EDR Lab
 
 ## Objective
 
@@ -175,4 +175,117 @@ command:
 3. Also, we want to have the hostname be for all hosts not just a specific one so remove that line about hosts.
 4. Now you should go back and find other events of svchost detections and copy its information to test it against your false positive rule.
 
+### Part 6 - Trigger YARA scans with a detection rule
+1. We're going to make a YARA rule within LimaCharlie to sift through information to find malware signatures.
+![image](https://github.com/user-attachments/assets/49c63efe-7f49-4823-9f91-1f3ae7f64f48)
+2. Then click "Add Yara Rule"
+![image](https://github.com/user-attachments/assets/7f3c06c2-07cb-4c94-a56f-cbfc7f8bf246)
+3. Copy and past the content of [gist](https://gist.githubusercontent.com/ecapuano/2c59ff1ea354f1aae905d6e12dc8e25b/raw/831d7b7b6c748f05123c6ac1a5144490985a7fe6/sliver.yara) to detect the command inputs from sliver
+4. Once saved we're making another to detect the process of sliver copy [gist](https://gist.githubusercontent.com/ecapuano/f40d5a99d19500538984bd88996cfe68/raw/12587427383def9586580647de13b4a89b9d4130/sliver_broad.yara) and add this to a new YARA rule.
+5. Then we will have to make some D&R rules with the following in Detect:
+```
+event: YARA_DETECTION
+op: and
+rules:
+  - op: exists
+    path: event/RULE_NAME
+  - op: exists
+    path: event/PROCESS/*
+```
+This detection is looking for YARA rules specifically.
+Now, we need to add a reponse to the rule. Add the following to the respond block
+```
+- action: report
+  name: YARA Detection in Memory {{ .event.RULE_NAME }}
+- action: add tag
+  tag: yara_detection_memory
+  ttl: 80000
+```
+6. Now, we need to make sure the rules work and tell us what we want to know.
+7. Click on Sensors List and choose the Windows VM
+![image](https://github.com/user-attachments/assets/fb731c98-3942-470e-8861-84ef9a253522)
+![image](https://github.com/user-attachments/assets/c545dfb4-c521-49cd-8274-2d134e86f91e)
+8.Run the command to kick off a manual YARA scan. Use the payload we created in the 2nd part of this lab.
+``` yara_scan hive://yara/sliver -f C:\Users\User\Downloads\[payload_name].exe ```
+![image](https://github.com/user-attachments/assets/82335f0e-6236-4967-a40d-d74524958601)
+Hit enter twice to execute the command.
+![image](https://github.com/user-attachments/assets/2f2e43a3-db00-40c8-914f-1869ae400328)
+After the execution we need to make sure we have a new detection in the "Detections" area.
+![image](https://github.com/user-attachments/assets/2e295895-fa2f-4931-bee8-825cbd35d922)
+9. Since that is there we're going to create a new rule in the Automation > D&R Rules when you start the new rule add this to the Detect block:
+```
+event: NEW_DOCUMENT
+op: and
+rules:
+  - op: starts with
+    path: event/FILE_PATH
+    value: C:\Users\
+  - op: contains
+    path: event/FILE_PATH
+    value: \Downloads\
+  - op: ends with
+    path: event/FILE_PATH
+    value: .exe
+```
+This detection will look for any new .exe files in the downloads.
+Then in the Response block add this:
+```
+- action: report
+  name: EXE dropped in Downloads directory
+- action: task
+  command: >-
+    yara_scan hive://yara/sliver -f "{{ .event.FILE_PATH
+    }}"
+  investigation: Yara Scan Exe
+  suppression:
+    is_global: false
+    keys:
+      - '{{ .event.FILE_PATH }}'
+      - Yara Scan Exe
+    max_count: 1
+    period: 1m
+```
+This response action generates an alert for the EXE creation, but more importantly, kicks off a YARA scan using the Sliver signature against the newly created EXE.
+10. We will need to make a new detection that will scan for procceses launched from downloads directory.
+11. Go to Automation > D&R Rules then create a new rule and in the Detect block put this:
+```
+event: NEW_PROCESS
+op: and
+rules:
+  - op: starts with
+    path: event/FILE_PATH
+    value: C:\Users\
+  - op: contains
+    path: event/FILE_PATH
+    value: \Downloads\
+```
+This rule will alert if anything with .exe is launched from the downloads directory.
+12. In the Response block put this:
+```
+- action: report
+  name: Execution from Downloads directory
+- action: task
+  command: yara_scan hive://yara/sliver-process --pid "{{ .event.PROCESS_ID }}"
+  investigation: Yara Scan Process
+  suppression:
+    is_global: false
+    keys:
+      - '{{ .event.PROCESS_ID }}'
+      - Yara Scan Process
+    max_count: 1
+    period: 1m
+```
+13. Triggering the new rules by scanning new exes in downloads. The way to simulate this will be to move the file out of Downloads then back into it to trigger the event. And to accomplish this run an admin powershell then move the file with:
+``` Move-Item -Path C:\Users\User\Downloads\[payload_name].exe -Destination C:\Users\User\Documents\[payload_name].exe ```
+Replace payload with your C2 file name.
+14. Move it back in to trigger our event for the exe being added to the downloads folder with:
+``` Move-Item -Path C:\Users\User\Documents\[payload_name].exe -Destination C:\Users\User\Downloads\[payload_name].exe ```
+Then we can head over to detections and see what happened!
+15. We can see that the detections worked and that there is a record to alert us!
+![image](https://github.com/user-attachments/assets/b2cc6056-398e-475c-8763-56c077767aee)
+16. The last thing to check is to make sure the process will be recognized so that if it launches we'll know.
+17. Next, you'll need to use an Admin PowerShell to run the process so we can see the New_Process detection works. From an Admin PowerShell run 
+```
+C:\Users\User\Downloads\[payload_name].exe
+```
 *Ref 1: Network Diagram*
