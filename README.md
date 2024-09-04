@@ -180,9 +180,9 @@ command:
 ![image](https://github.com/user-attachments/assets/49c63efe-7f49-4823-9f91-1f3ae7f64f48)
 2. Then click "Add Yara Rule"
 ![image](https://github.com/user-attachments/assets/7f3c06c2-07cb-4c94-a56f-cbfc7f8bf246)
-3. Copy and past the content of [gist](https://gist.githubusercontent.com/ecapuano/2c59ff1ea354f1aae905d6e12dc8e25b/raw/831d7b7b6c748f05123c6ac1a5144490985a7fe6/sliver.yara) to detect the command inputs from sliver
-4. Once saved we're making another to detect the process of sliver copy [gist](https://gist.githubusercontent.com/ecapuano/f40d5a99d19500538984bd88996cfe68/raw/12587427383def9586580647de13b4a89b9d4130/sliver_broad.yara) and add this to a new YARA rule.
-5. Then we will have to make some D&R rules with the following in Detect:
+4. Copy and past the content of [gist](https://gist.githubusercontent.com/ecapuano/2c59ff1ea354f1aae905d6e12dc8e25b/raw/831d7b7b6c748f05123c6ac1a5144490985a7fe6/sliver.yara) to detect the command inputs from sliver
+5. Once saved we're making another to detect the process of sliver copy [gist](https://gist.githubusercontent.com/ecapuano/f40d5a99d19500538984bd88996cfe68/raw/12587427383def9586580647de13b4a89b9d4130/sliver_broad.yara) and add this to a new YARA rule.
+6. Then we will have to make some D&R rules with the following in Detect:
 ```
 event: YARA_DETECTION
 op: and
