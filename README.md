@@ -205,15 +205,24 @@ Now, we need to add a reponse to the rule. Add the following to the respond bloc
 ```
 6. Now, we need to make sure the rules work and tell us what we want to know.
 7. Click on Sensors List and choose the Windows VM
+
 ![image](https://github.com/user-attachments/assets/fb731c98-3942-470e-8861-84ef9a253522)
+
 ![image](https://github.com/user-attachments/assets/c545dfb4-c521-49cd-8274-2d134e86f91e)
+
 8.Run the command to kick off a manual YARA scan. Use the payload we created in the 2nd part of this lab.
 ``` yara_scan hive://yara/sliver -f C:\Users\User\Downloads\[payload_name].exe ```
+
 ![image](https://github.com/user-attachments/assets/82335f0e-6236-4967-a40d-d74524958601)
+
 Hit enter twice to execute the command.
+
 ![image](https://github.com/user-attachments/assets/2f2e43a3-db00-40c8-914f-1869ae400328)
+
 After the execution we need to make sure we have a new detection in the "Detections" area.
+
 ![image](https://github.com/user-attachments/assets/2e295895-fa2f-4931-bee8-825cbd35d922)
+
 9. Since that is there we're going to create a new rule in the Automation > D&R Rules when you start the new rule add this to the Detect block:
 ```
 event: NEW_DOCUMENT
