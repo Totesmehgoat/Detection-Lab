@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/7cb4cba3-89be-4ba2-b3e2-a8cc6ddfd323)# SOC Analyst EDR Lab
+# SOC Analyst EDR Lab
 
 ## Objective
 
